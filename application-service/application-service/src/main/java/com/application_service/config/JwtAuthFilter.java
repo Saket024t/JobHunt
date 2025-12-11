@@ -1,4 +1,4 @@
-package com.job_service.config;
+package com.application_service.config;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails; // We will use a dummy user detail for now
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -26,26 +25,17 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String username = null;
-        System.out.println("--- FILTER START ---");
-        System.out.println("1. Request URL: " + request.getRequestURI());
-        System.out.println("2. Auth Header: " + authHeader);
+
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
-            System.out.println("3. Extracted Token: " + token);
             try {
                 username = jwtService.extractUsername(token);
-                System.out.println("4. Username from Token: " + username);
             } catch (Exception e) {
                 System.out.println("Token validation failed: " + e.getMessage());
-                System.out.println("!!! TOKEN ERROR: " + e.getMessage());
-                e.printStackTrace();
             }
-        }else{
-            System.out.println("2a. Header is missing or does not start with Bearer");
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            System.out.println("5. Token Validated. Setting Security Context.");
             // Token is valid. We manually set the authentication in the context.
             // Note: In a real microservice, we might extract roles from the token here.
             // For now, we just say "This user is Authenticated".

@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import PostJob from "./pages/PostJob";
+import EditJob from './pages/EditJob';
 
 // Simple Protected Route Component
 // If no token, kick user back to Login
@@ -41,6 +42,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/edit-job" element={<ProtectedRoute><EditJob /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );

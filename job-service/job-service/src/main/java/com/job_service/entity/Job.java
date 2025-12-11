@@ -32,8 +32,13 @@ public class Job {
     private Long postedBy; // The ID of the Recruiter who posted this
     private LocalDate postedDate;
 
+    private String status; // Values: "OPEN", "PAUSED"
+
     @PrePersist
     public void onCreate() {
         this.postedDate = LocalDate.now();
+        if (this.status == null) {
+            this.status = "OPEN";
+        }
     }
 }

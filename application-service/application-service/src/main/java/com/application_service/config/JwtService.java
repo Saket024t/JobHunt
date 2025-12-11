@@ -1,4 +1,4 @@
-package com.job_service.config;
+package com.application_service.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -29,11 +29,7 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) {
-        Claims claims =Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token).getBody();
-                System.out.println("--- JWT DECODE SUCCESS ---");
-        System.out.println("Payload/Claims: " + claims);
-        System.out.println("Expiration: " + claims.getExpiration());
-        return claims;
+        return Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token).getBody();
     }
 
     private Key getSignKey() {
